@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factastic!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #6200ea;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        select, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        #factsDisplay {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Factastic: the ultimate fact generator!</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Select a Theme</h2>
+            <select id="themeSelector">
+                <option value="">--Choose a Theme--</option>
+                <option value="Space Facts">Space Facts🚀</option>
+                <option value="Tech Trivia">Tech Trivia💻</option>
+                <option value="Pop Culture Fun Facts">Pop Culture Fun Facts🍿</option>
+                <option value="Gaming Fun Facts">Gaming Fun Facts🎮</option>
+                <option value="Animal Kingdom">Animal Kingdom🐨</option>
+                <option value="Travel and Geography">Travel and Geography✈️</option>
+                <option value="Foodie Fun">Foodie Fun🍕</option>
+                <option value="Sports Trivia">Sports Trivia🏏</option>
+                <option value="Mythbusters Edition">Mythbusters Edition🕵️</option>
+                <option value="Historical Oddities">Historical Oddities🧐</option>
+            </select>
+            <button onclick="generateFacts()">Generate Facts🫧</button>
+            <button onclick="surpriseMe()">Surprise Me!🔀</button>
+            <div id="factsDisplay"></div>
+        </section>
+    </main>
+    <script>
+        const facts = {
+            "Space Facts": [
+                "The Sun accounts for about 99.86% of the total mass of the Solar System.",
+                "Venus rotates on its axis slower than it orbits the Sun, making a day on Venus longer than a year.",
+                "A sugar-cube-sized amount of neutron-star material would weigh about 6 billion tons on Earth.",
+                "Jupiter's Great Red Spot is a giant storm that has been raging for at least 350 years.",
+                "About 27% of the universe is dark matter, which does not emit light or energy, making it invisible and detectable only through its gravitational effects.",
+                "Mars hosts Olympus Mons, the tallest volcano and mountain in the Solar System, standing at 13.6 miles high.",
+                "As of 2023, over 5,000 exoplanets have been confirmed in our galaxy.",
+                "The closest known black hole to Earth is about 1,000 light-years away in the constellation Telescopium.",
+                "It takes the Solar System about 225-250 million years to complete one orbit around the Milky Way's center.",
+                "There are over 128 million pieces of debris smaller than 1 cm orbiting Earth."
+            ],
+            "Tech Trivia": [
+                "The first computer bug was an actual moth found in a Harvard Mark II computer in 1947.",
+                "The first email was sent by Ray Tomlinson to himself in 1971.",
+                "The first website was created by Tim Berners-Lee and went live on August 6, 1991.",
+                "Gordon Moore predicted in 1965 that the number of transistors on a microchip would double every two years.",
+                "IBM's Simon, released in 1994, is considered the first smartphone.",
+                "Google’s first storage was made from LEGO bricks to house 10 4GB hard drives.",
+                "Bluetooth is named after a 10th-century Scandinavian king, Harald 'Bluetooth' Gormsson.",
+                "'Pong,' released in 1972, was one of the first commercially successful video games.",
+                "As of 2023, the fastest internet speed recorded is 319 terabits per second.",
+                "In 1997, IBM's Deep Blue defeated world chess champion Garry Kasparov."
+            ],
+            "Pop Culture Fun Facts": [
+                "Walt Disney himself provided the original voice for Mickey Mouse.",
+                "'The Simpsons' is the longest-running American sitcom and animated series.",
+                "The Beatles hold the record for the most number-one hits on the Billboard Hot 100 chart.",
+                "J.K. Rowling shares a birthday with her character Harry Potter, July 31.",
+                "'Iron Man' (2008) was the first film in the Marvel Cinematic Universe.",
+                "The Oscar statuette is officially named the 'Academy Award of Merit.'",
+                "May 4th is celebrated as Star Wars Day, with the pun 'May the Fourth be with you.'",
+                "Elvis Presley holds the record for the most songs charting on the Billboard Hot 100.",
+                "'Snow White and the Seven Dwarfs' (1937) was the first full-length animated feature film.",
+                "The '00' in James Bond's code number signifies his license to kill."
+            ],
+            "Gaming Fun Facts": [
+                "The Magnavox Odyssey, released in 1972, was the first home video game console.",
+                "Mario was originally called 'Jumpman' in the arcade game 'Donkey Kong.'",
+                "As of 2023, 'Minecraft' has sold over 238 million copies, making it the best-selling video game of all time.",
+                "Pac-Man was designed to resemble a pizza with a slice missing.",
+                "The term 'Easter egg' in gaming originated from the hidden message in the 1980 game 'Adventure' for the Atari 2600.",
+                "'Duke Nukem Forever' holds the record for the longest game development period, taking 15 years.",
+                "In 1993, 'Tetris' became the first video game played in space by Russian cosmonaut Aleksandr A. Serebrov.",
+                "The first known esports tournament was held in 1972 for the game 'Spacewar!' at Stanford University.",
+                "The Pokémon franchise was inspired by creator Satoshi Tajiri's childhood interest in collecting creatures.",
+                "'Grand Theft Auto' is one of the most controversial video game series due to its mature content."
+            ],
+            "Animal Kingdom": [
+                "An octopus has three hearts; two pump blood to the gills, and one pumps it to the rest of the body.",
+                "Elephants have excellent memory and can recognize individuals and locations even after many years.",
+                "Dolphins have unique whistles that serve as names, allowing them to call each other.",
+                "Cheetahs can accelerate from 0 to 60 mph in just a few seconds, making them the fastest land animals.",
+                "Male penguins propose to females by presenting them with a pebble.",
+                "A worker honeybee lives for about six weeks, while a queen can live up to five years.",
+                "A giraffe's tongue is about 18-20 inches long and is prehensile, allowing it to grasp leaves.",
+                "A newborn kangaroo, called a joey, is about the size of a jellybean at birth.",
+                "Owls can rotate their heads up to 270 degrees without damaging blood vessels or tearing tendons.",
+                "Sharks can have up to 30,000 teeth in their lifetime, as they continuously shed and regrow them."
+            ],
+            "Travel and Geography": [
+                "Vatican City is the smallest country in the world, with an area of about 44 hectares (110 acres).",
+                "The Nile River is traditionally considered the longest river in the world, stretching about 6,650 km (4,130 miles).",
+                "As of 2023, Tokyo is the most populous city in the world, with over 37 million residents.",
+                "Antarctica is the largest desert in the world, classified as a cold desert.",
+                "Angel Falls in Venezuela is the world's tallest uninterrupted waterfall, with a height of 979 meters (3,212 feet).",
+                "The Mariana Trench is the deepest part of the world's oceans, reaching about 10,994 meters (36,070 feet).",
+                "Jericho, in the West Bank, is considered one of the oldest continuously inhabited cities in the world.",
+                "Greenland is the world's largest island that is not a continent.",
+                "Papua New Guinea is the most linguistically diverse country, with over 800 languages spoken.",
+                "Mount Everest is the highest mountain above sea level, standing at 8,848 meters (29,029 feet)."
+            ],
+            "Foodie Fun": [
+                "The modern pizza originated in Naples, Italy, in the late 18th century.",
+                "The Aztecs used cacao beans as currency.",
+                "The Carolina Reaper holds the Guinness World Record for the hottest chili pepper.",
+                "Sushi originated as a method of preserving fish in fermented rice in Southeast Asia.",
+                "Legend says coffee was discovered by Ethiopian shepherds who noticed their goats became energetic after eating coffee berries.",
+                "Bananas are slightly radioactive due to their potassium content.",
+                "France is known for having over 1,000 different types of cheese.",
+                "Mead, made from fermented honey, is considered one of the oldest alcoholic beverages.",
+                "Botanically, tomatoes are fruits, but they are commonly used as vegetables in cooking.",
+                "China is the world's largest producer of garlic, accounting for about 80% of global production."
+            ],
+            "Sports Trivia": [
+                "Wrestling is considered one of the oldest sports, with depictions found in cave paintings dating back to 3000 BC.",
+                "The five Olympic rings represent the five continents participating in the games.",
+                "The longest tennis match lasted 11 hours and 5 minutes, played at Wimbledon in 2010.",
+                "The first FIFA World Cup was held in Uruguay in 1930.",
+                "Basketball was invented by James Naismith in 1891 in Springfield, Massachusetts.",
+                "The fastest goal in World Cup history was scored by Hakan Şükür of Turkey in 11 seconds in 2002.",
+                "The Super Bowl is one of the most-watched sporting events globally, with over 100 million viewers annually.",
+                "The longest cricket match lasted 12 days between England and South Africa in 1939.",
+                "The first Olympic marathon was held in 1896, inspired by the ancient Greek messenger Pheidippides.",
+                "Modern golf originated in Scotland in the 15th century."
+            ],
+            "Mythbusters Edition": [
+                "Contrary to popular belief, goldfish have a memory span of several months, not just a few seconds.",
+                "Bulls are colorblind to red; they charge at the movement of the matador's cape, not the color.",
+                "Cracking your knuckles does not cause arthritis, though it may reduce grip strength over time.",
+                "Lightning can strike the same place more than once; tall structures are often hit multiple times.",
+                "Swallowed gum does not stay in your stomach for seven years; it passes through the digestive system normally.",
+                "Hair and nails do not continue to grow after death; the skin retracts, giving the appearance of growth.",
+                "Touching toads does not cause warts; warts are caused by human papillomavirus (HPV).",
+                "Humans use more than 10% of their brains; brain imaging shows activity coursing through the entire organ.",
+                "Vikings did not wear horned helmets; this image was popularized by 19th-century operas.",
+                "Chameleons change color primarily for communication and temperature regulation, not just camouflage."
+            ],
+            "Historical Oddities": [
+                "Cleopatra lived closer in time to the first Moon landing than to the construction of the Great Pyramid of Giza.",
+                "The Anglo-Zanzibar War of 1896 is the shortest war in history, lasting only 38 minutes.",
+                "Napoleon Bonaparte was not extremely short; he was about 5'7\", average height for his time.",
+                "Australia once declared war on emus in 1932 due to their impact on crops, but the emus won.",
+                "In 1518, a 'dancing plague' in Strasbourg caused many people to dance uncontrollably for days.",
+                "In the 17th century, the Netherlands experienced 'tulip mania,' where tulip bulbs were worth more than gold.",
+                "Ancient Roman concrete is more durable than modern concrete due to its volcanic ash content.",
+                "The first vending machine was invented in ancient Greece by Hero of Alexandria to dispense holy water.",
+                "The Eiffel Tower was originally painted red; it is now repainted every seven years in 'Eiffel Tower Brown.'",
+                "The Salem witch trials were partly fueled by ergot poisoning, a hallucinogenic fungus found in rye bread."
+            ]
+            }
+
+
+        function generateFacts() {
+            const theme = document.getElementById('themeSelector').value;
+            const factsDisplay = document.getElementById('factsDisplay');
+            factsDisplay.innerHTML = ''; // Clear previous facts
+
+            if (theme && facts[theme]) {
+                const selectedFacts = facts[theme];
+                const randomIndex = Math.floor(Math.random() * 10);
+                const fact = document.createElement('p');
+                fact.textContent= facts[theme][randomIndex]
+                const themename = document.createElement('h4');
+                themename.textContent=theme;
+                factsDisplay.appendChild(themename);
+                factsDisplay.appendChild(fact);
+            } else {
+                factsDisplay.textContent = 'Please select a valid theme.';
+            }
+        }
+
+        function surpriseMe() {
+            const themes = Object.keys(facts); // Get all theme names
+            const randomTheme = themes[Math.floor(Math.random() * themes.length)]; // Pick a random theme
+            const randomFact = facts[randomTheme][Math.floor(Math.random() * facts[randomTheme].length)]; // Pick a random fact from the theme
+            const factsDisplay = document.getElementById('factsDisplay');
+            factsDisplay.innerHTML = `<h3>${randomTheme}</h3><p>${randomFact}</p>`;
+        }
+    </script>
+</body>
+</html>
